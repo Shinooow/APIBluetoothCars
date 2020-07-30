@@ -1,28 +1,21 @@
-package controller;
+package fr.irit.smac.bluetoothcars;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-import javax.bluetooth.RemoteDevice;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 
 public class BluetoothCar {
 
-	private RemoteDevice associateRemoteDevice;
 	private StreamConnection connection;
 	private OutputStream outputStream;
 	private PrintWriter printWriter;
 	private String url;
-	
-	public BluetoothCar(String url) {
-		this.url = url;
-	}
 
-	public BluetoothCar(RemoteDevice associateRemoteDevice, String url) {
-		this.associateRemoteDevice = associateRemoteDevice;
+	public BluetoothCar(String url) {
 		this.url = url;
 	}
 
@@ -219,8 +212,5 @@ public class BluetoothCar {
 	public String getUrl() {
 		return url;
 	}
-
-	public RemoteDevice getRemoteDevice() {
-		return associateRemoteDevice;
-	}
+	
 }

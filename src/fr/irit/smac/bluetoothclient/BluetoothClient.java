@@ -1,4 +1,4 @@
-package controller;
+package fr.irit.smac.bluetoothclient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,10 @@ import javax.bluetooth.LocalDevice;
 import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.UUID;
 
+import fr.irit.smac.bluetoothcars.BluetoothCar;
+
 public class BluetoothClient {
 
-	// Discover agent
 	private DiscoveryAgent discoveryAgent;
 	private LocalDevice localDevice;
 	private BluetoothDiscoveryListener listener;
@@ -39,7 +40,7 @@ public class BluetoothClient {
 				lock.wait();
 			}
 		} catch (BluetoothStateException | InterruptedException a) {
-			System.out.println("Bluetooth/wait error");
+			System.out.println("-- Bluetooth/wait error");
 		}
 	}
 
@@ -64,11 +65,6 @@ public class BluetoothClient {
 				return;
 			}
 		}
-
-	}
-
-	public Object getLock() {
-		return lock;
 	}
 
 	public List<RemoteDevice> getDiscoveredDevices() {
@@ -95,66 +91,4 @@ public class BluetoothClient {
 		discoveredDevices.remove(id);
 	}
 
-	public static void main(String[] args) {
-		System.out.println("Creating objects...");
-		BluetoothClient discover = new BluetoothClient();
-		System.out.println("Recherche..");
-		discover.findDevices();
-		System.out.println("Services..");
-		discover.testService();
-		System.out.println("Order tests");
-		for (BluetoothCar bDevice : discover.getBluetoothCars()) {
-			bDevice.connection();
-			for (int i = 0; i < 10; i++) {
-				bDevice.moveForward();
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			for (int i = 0; i < 1; i++) {
-				bDevice.forwardToRight();
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			for (int i = 0; i < 1; i++) {
-				bDevice.forwardToLeft();
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			for (int i = 0; i < 1; i++) {
-				bDevice.moveBackward();
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			for (int i = 0; i < 1; i++) {
-				bDevice.backwardToLeft();
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			for (int i = 0; i < 1; i++) {
-				bDevice.backwardToRight();
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			bDevice.disconnection();
-		}
-	}
 }
