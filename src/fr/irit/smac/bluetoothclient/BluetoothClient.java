@@ -33,6 +33,7 @@ public class BluetoothClient {
 		}
 	}
 
+	/* find */
 	public void findDevices() {
 		try {
 			discoveryAgent.startInquiry(DiscoveryAgent.GIAC, listener);
