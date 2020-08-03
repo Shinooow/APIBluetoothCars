@@ -58,7 +58,6 @@ public class BluetoothCar {
 	}
 
 	/* ACTIONS */
-
 	public void moveForward() {
 		stopBeforeForward();
 		printWriter.write(0x0001);

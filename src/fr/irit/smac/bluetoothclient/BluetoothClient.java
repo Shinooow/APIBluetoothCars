@@ -66,7 +66,133 @@ public class BluetoothClient {
 			}
 		}
 	}
+	
+	public void moveForward(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.moveForward();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void moveBackward(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.moveBackward();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void forwardToLeft(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.forwardToLeft();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void forwardToRight(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.forwardToRight();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void backwardToLeft(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.backwardToLeft();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
 
+	public void backwardToRight(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.backwardToRight();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void m1(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.m1();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void m2(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.m2();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void m3(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.m3();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void m4(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.m4();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void m5(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.m5();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void m6(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.m6();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void m7(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.m7();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
+	public void m8(int carId) {
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			bluetoothCar.m8();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+	}
+	
 	public List<RemoteDevice> getDiscoveredDevices() {
 		return discoveredDevices;
 	}
