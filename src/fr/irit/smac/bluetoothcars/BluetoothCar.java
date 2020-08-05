@@ -108,7 +108,7 @@ public class BluetoothCar {
 		}
 	}
 
-	/* macro */
+	/* macros */
 	public void m2() {
 		try {
 			forwardToRight();
