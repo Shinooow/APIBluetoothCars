@@ -10,8 +10,18 @@ import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.UUID;
 
 import fr.irit.smac.bluetoothcars.BluetoothCar;
+import msi.gama.precompiler.GamlAnnotations.action;
+import msi.gama.precompiler.GamlAnnotations.doc;
+import msi.gama.precompiler.GamlAnnotations.skill;
+import msi.gama.runtime.IScope;
+import msi.gama.runtime.exceptions.GamaRuntimeException;
+import msi.gaml.skills.Skill;
 
-public class BluetoothClient {
+@skill(name = "Bluetooth")
+@doc(value = "The Bluetooth skill makes Gama able to connect itself to the vehicules via Bluetooth, "
+		+ "this skill gives all the actions to move a car (move forward, move backward"
+		+ "turn to the left ...)") 
+public class BluetoothClient extends Skill{
 
 	private DiscoveryAgent discoveryAgent;
 	private LocalDevice localDevice;
@@ -31,6 +41,9 @@ public class BluetoothClient {
 		} catch (BluetoothStateException e) {
 			System.out.println("-- OS Bluetooth init error");
 		}
+		findDevices();
+		testService();
+		System.out.println("Client created");
 	}
 
 	/* find */
@@ -41,13 +54,13 @@ public class BluetoothClient {
 				lock.wait();
 			}
 		} catch (BluetoothStateException | InterruptedException a) {
-			System.out.println("-- Bluetooth/wait error");
+			System.out.println("-- Bluetooth: finding devices error");
 		}
 	}
 
 	public void testService() {
 		UUID[] uuidSet = new UUID[1];
-		uuidSet[0] = new UUID(0x1101); // OBEX Object Push service
+		uuidSet[0] = new UUID(0x1101);
 
 		int[] attrIDs = new int[] { 0x0100 };
 
@@ -68,130 +81,212 @@ public class BluetoothClient {
 		}
 	}
 	
-	public void moveForward(int carId) {
+	@action(name = "connectCar")
+	public Integer connectCar(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.connection();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+		return 0;
+	}
+	
+	@action(name = "disconnectCar")
+	public Integer disconnectCar(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.disconnection();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Invalid car");
+		}
+		return 0;
+	}
+	
+	@action(name = "moveForward")
+	public Integer moveForward(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
+		try {
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
 			bluetoothCar.moveForward();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void moveBackward(int carId) {
+	@action(name = "moveBackward")
+	public Integer moveBackward(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
 			bluetoothCar.moveBackward();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void forwardToLeft(int carId) {
+	@action(name = "forwardToLeft")
+	public Integer forwardToLeft(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
 			bluetoothCar.forwardToLeft();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void forwardToRight(int carId) {
+	@action(name = "forwardToRight")
+	public Integer forwardToRight(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
 			bluetoothCar.forwardToRight();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void backwardToLeft(int carId) {
+	@action(name = "backwardToLeft")
+	public Integer backwardToLeft(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
 			bluetoothCar.backwardToLeft();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 
-	public void backwardToRight(int carId) {
+	@action(name = "backwardToRight")
+	public Integer backwardToRight(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
 			bluetoothCar.backwardToRight();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void m1(int carId) {
+	@action(name = "leftUTurn")
+	public Integer leftUTurn(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
-			bluetoothCar.m1();
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.leftUTurn();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void m2(int carId) {
+	@action(name = "rightUTurn")
+	public Integer rightUTurn(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
-			bluetoothCar.m2();
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.rightUTurn();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void m3(int carId) {
+	@action(name = "clockwiseCircle")
+	public Integer clockwiseCircle(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
-			bluetoothCar.m3();
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.clockwiseCircle();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void m4(int carId) {
+	@action(name = "antiClockwiseCircle")
+	public Integer antiClockwiseCircle(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
-			bluetoothCar.m4();
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.antiClockwiseCircle();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void m5(int carId) {
+	@action(name = "parallelParking")
+	public Integer parallelParking(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
-			bluetoothCar.m5();
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.parallelParking();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void m6(int carId) {
+	@action(name = "backwardParking")
+	public Integer backwardParking(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
-			bluetoothCar.m6();
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.backwardParking();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void m7(int carId) {
+	@action(name = "forwardParking")
+	public Integer forwardParking(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
-			bluetoothCar.m7();
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.forwardParking();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
-	public void m8(int carId) {
+	@action(name = "slalom")
+	public Integer slalom(final IScope scope) throws GamaRuntimeException {
+		Object idGuidableObject = scope.getAgentVarValue(scope.getAgent(), "idGuidable");
+		Integer idGuidable = (Integer) idGuidableObject;
 		try {
-			BluetoothCar bluetoothCar = bluetoothCars.get(carId);
-			bluetoothCar.m8();
+			BluetoothCar bluetoothCar = bluetoothCars.get(idGuidable);
+			bluetoothCar.slalom();
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Invalid car");
 		}
+		return 0;
 	}
 	
 	public List<RemoteDevice> getDiscoveredDevices() {

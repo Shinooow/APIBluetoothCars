@@ -24,6 +24,7 @@ public class BluetoothCar {
 			connection = (StreamConnection) Connector.open(url);
 			outputStream = connection.openOutputStream();
 			printWriter = new PrintWriter(new OutputStreamWriter(outputStream));
+			System.out.println(this + " connected!");
 		} catch (IOException e) {
 			System.out.println("Connection failed!");
 		}
@@ -96,7 +97,7 @@ public class BluetoothCar {
 
 	/* BASIC MACROS */
 	// TODO rename
-	public void m1() {
+	public void leftUTurn() {
 		try {
 			forwardToLeft();
 			Thread.sleep(1000);
@@ -108,8 +109,8 @@ public class BluetoothCar {
 		}
 	}
 
-	/* macrose t*/
-	public void m2() {
+	/* macro */
+	public void rightUTurn() {
 		try {
 			forwardToRight();
 			Thread.sleep(1000);
@@ -121,7 +122,7 @@ public class BluetoothCar {
 		}
 	}
 
-	public void m3() {
+	public void clockwiseCircle() {
 		try {
 			forwardToRight();
 			Thread.sleep(500);
@@ -138,7 +139,7 @@ public class BluetoothCar {
 		}
 	}
 
-	public void m4() {
+	public void antiClockwiseCircle() {
 		try {
 			forwardToLeft();
 			Thread.sleep(500);
@@ -155,7 +156,7 @@ public class BluetoothCar {
 		}
 	}
 
-	public void m5() {
+	public void parallelParking() {
 		try {
 			moveForward();
 			Thread.sleep(500);
@@ -170,7 +171,7 @@ public class BluetoothCar {
 		}
 	}
 
-	public void m6() {
+	public void backwardParking() {
 		try {
 			forwardToLeft();
 			Thread.sleep(1000);
@@ -180,7 +181,7 @@ public class BluetoothCar {
 		}
 	}
 
-	public void m7() {
+	public void forwardParking() {
 		try {
 			backwardToLeft();
 			Thread.sleep(1000);
@@ -190,7 +191,7 @@ public class BluetoothCar {
 		}
 	}
 
-	public void m8() {
+	public void slalom() {
 		try {
 			forwardToRight();
 			Thread.sleep(700);

@@ -37,7 +37,7 @@ public class BluetoothDiscoveryListener implements DiscoveryListener {
 	}
 
 	@Override
-	public void inquiryCompleted(int arg0) {
+	public void inquiryCompleted(int discType) {
 		synchronized (BluetoothClient.lock) {
 			BluetoothClient.lock.notify();
 		}
@@ -45,7 +45,7 @@ public class BluetoothDiscoveryListener implements DiscoveryListener {
 	}
 
 	@Override
-	public void serviceSearchCompleted(int arg0, int arg1) {
+	public void serviceSearchCompleted(int transID, int respCode) {
 		synchronized (BluetoothClient.lock) {
 			BluetoothClient.lock.notify();
 		}
